@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 # 깃허브 raw 링크 (본인 깃허브 주소로 변경하세요)
-activated_cards_url = 'https://github.com/username/repo-name/raw/main/activated_cards.xlsx'
+activated_cards_url = 'https://github.com/iissyyii/final/blob/main/activated_cards.xlsx'
 age_group_users_url = 'https://github.com/username/repo-name/raw/main/age_group_users.xlsx'
 
 @st.cache_data
