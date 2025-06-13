@@ -31,19 +31,20 @@ if activated_df is not None and age_group_df is not None:
     # 1. 활성화된 기후동행카드 수 시각화
     st.header('활성화된 기후동행카드 수')
 
-    # '월'과 '활성화 카드' 컬럼을 사용하여 시각화
+    # '24.2월', '24.3월' 등의 컬럼명을 가져와서 x축으로 사용
     try:
-        # 컬럼명을 '월'과 '활성화 카드'로 설정
-        month_col = '월'
-        card_count_col = '활성화 카드'
-        
-        fig1 = px.line(activated_df, x=month_col, y=card_count_col,
-                       labels={month_col: '월', card_count_col: '활성화 카드 수'},
+        # '구분' 컬럼을 제외하고 월별 데이터 추출
+        activated_df_months = activated_df.drop(columns=['Unnamed: 0', '구분'])
+
+        # 월별 데이터의 컬럼명을 '월'로 변환하여 시각화
+        fig1 = px.line(activated_df_months.T, 
+                       labels={'index': '월', 'value': '활성화 카드 수'},
                        title='월별 활성화된 기후동행카드 수')
+
         st.plotly_chart(fig1)
 
     except IndexError:
-        st.warning("활성화 카드 데이터(activated_cards.xlsx)에 '월'과 '활성화 카드' 컬럼이 필요합니다.")
+        st.warning("활성화 카드 데이터(activated_cards.xlsx)에 적절한 월별 데이터가 필요합니다.")
     except Exception as e:
         st.error(f"활성화 카드 차트 생성 중 오류: {e}")
 
@@ -70,4 +71,3 @@ if activated_df is not None and age_group_df is not None:
     else:
         st.warning("연령대별 이용자 데이터(age_group_users.csv)에 '따릉이 포함'과 '따릉이 미포함' 컬럼이 필요합니다.")
         st.write("현재 파일의 컬럼:", age_group_df.columns.tolist())
-
