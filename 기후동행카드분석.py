@@ -5,6 +5,7 @@ import plotly.express as px
 # --- URL 수정 ---
 activated_cards_url = 'https://raw.githubusercontent.com/iissyyii/final/main/activated_cards.xlsx'
 age_group_users_url = 'https://raw.githubusercontent.com/iissyyii/final/main/age_group_users.csv'
+car_data_url = 'https://raw.githubusercontent.com/iissyyii/final/main/car.xlsx'  # 여기에 올바른 URL을 넣으세요
 
 @st.cache_data
 def load_data():
@@ -70,13 +71,6 @@ if activated_df is not None and age_group_df is not None:
 
 
 
-
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-
-# GitHub Raw URL에서 car.xlsx 파일 불러오기
-car_data_url = 'https://raw.githubusercontent.com/iissyyii/final/main/car.xlsx'  # 여기에 올바른 URL을 넣으세요
 
 @st.cache_data
 def load_data():
