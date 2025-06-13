@@ -64,3 +64,59 @@ if activated_df is not None and age_group_df is not None:
     else:
         st.warning("연령대별 이용자 데이터(age_group_users.csv)에 '따릉이 포함'과 '따릉이 미포함' 컬럼이 필요합니다.")
         st.write("현재 파일의 컬럼:", age_group_df.columns.tolist())
+
+
+
+
+
+
+
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+
+# GitHub Raw URL에서 car.xlsx 파일 불러오기
+car_data_url = 'https://raw.githubusercontent.com/your-username/your-repo/main/car.xlsx'  # 여기에 올바른 URL을 넣으세요
+
+@st.cache_data
+def load_data():
+    """
+    GitHub에서 car.xlsx 파일을 불러옵니다.
+    """
+    try:
+        car_df = pd.read_excel(car_data_url)  # car.xlsx를 읽어옵니다.
+        return car_df
+    except Exception as e:
+        st.error(f"데이터를 불러오는 중 오류가 발생했습니다: {e}")
+        return None
+
+# 데이터 불러오기
+car_df = load_data()
+
+# 데이터 로딩에 성공한 경우에만 아래 시각화 코드를 실행
+if car_df is not None:
+    st.title('자차 보유 현황 시각화')
+
+    # 데이터 구조를 확인
+    st.write("데이터 프레임:", car_df.head())
+
+    # 1. 성별, 연령대별 자차 보유 현황 시각화
+    st.header('성별, 연령대별 자차 보유 현황')
+
+    # '성별', '연령대', '자차 보유' 컬럼이 있는지 확인
+    if '성별' in car_df.columns and '연령대' in car_df.columns and '자차 보유' in car_df.columns:
+        # 성별 구분 없이 자차 보유 현황을 연령대별로 합산
+        gender_age_group = car_df.groupby(['연령대'])['자차 보유'].sum().reset_index()
+
+        # 바 차트 생성
+        fig = px.bar(gender_age_group, x='연령대', y='자차 보유',
+                     labels={'연령대': '연령대', '자차 보유': '자차 보유자 수'},
+                     title='연령대별 자차 보유 현황 (성별 합산)')
+        st.plotly_chart(fig)
+    else:
+        st.warning("데이터에 '성별', '연령대', '자차 보유' 컬럼이 필요합니다.")
+        st.write("현재 파일의 컬럼:", car_df.columns.tolist())
+
+else:
+    st.error("데이터를 불러오지 못했습니다. 파일 URL을 확인해 주세요.")
+
