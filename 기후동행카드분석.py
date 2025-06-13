@@ -76,7 +76,7 @@ import pandas as pd
 import plotly.express as px
 
 # GitHub Raw URL에서 car.xlsx 파일 불러오기
-car_data_url = 'https://raw.githubusercontent.com/your-username/your-repo/main/car.xlsx'  # 여기에 올바른 URL을 넣으세요
+car_data_url = 'https://raw.githubusercontent.com/iissyyii/final/main/car.xlsx'  # 여기에 올바른 URL을 넣으세요
 
 @st.cache_data
 def load_data():
