@@ -55,11 +55,16 @@ if activated_df is not None and age_group_df is not None:
     if '따릉이 포함' in age_group_df.columns and '따릉이 미포함' in age_group_df.columns:
         # '따릉이 포함'과 '따릉이 미포함' 컬럼을 합쳐 '이용자 수' 컬럼 생성
         try:
+            # 숫자로 변환 (문자열 처리 가능하도록)
             age_group_df['따릉이 포함'] = pd.to_numeric(age_group_df['따릉이 포함'], errors='coerce')
             age_group_df['따릉이 미포함'] = pd.to_numeric(age_group_df['따릉이 미포함'], errors='coerce')
 
+            # '이용자 수' 컬럼 생성
             age_group_df['이용자 수'] = age_group_df['따릉이 포함'] + age_group_df['따릉이 미포함']
             
+            # 데이터 확인: 중간 값 출력
+            st.write(age_group_df.head())  # 데이터를 확인하고 문제가 있는지 체크
+
             # 새로 만든 '이용자 수' 컬럼을 사용해서 바 차트 생성
             fig2 = px.bar(age_group_df, x='연령대', y='이용자 수', 
                           labels={'연령대': '연령대', '이용자 수': '이용자 수'},
