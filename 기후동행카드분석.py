@@ -54,20 +54,13 @@ if activated_df is not None and age_group_df is not None:
     # '따릉이 포함'과 '따릉이 미포함' 컬럼이 있는지 확인하고 합치기
     if '따릉이 포함' in age_group_df.columns and '따릉이 미포함' in age_group_df.columns:
         # '따릉이 포함'과 '따릉이 미포함' 컬럼을 합쳐 '이용자 수' 컬럼 생성
-        try:
-            age_group_df['따릉이 포함'] = pd.to_numeric(age_group_df['따릉이 포함'], errors='coerce')
-            age_group_df['따릉이 미포함'] = pd.to_numeric(age_group_df['따릉이 미포함'], errors='coerce')
-
-            age_group_df['이용자 수'] = age_group_df['따릉이 포함'] + age_group_df['따릉이 미포함']
-            
-            # 새로 만든 '이용자 수' 컬럼을 사용해서 바 차트 생성
-            fig2 = px.bar(age_group_df, x='연령대', y='이용자 수', 
-                          labels={'연령대': '연령대', '이용자 수': '이용자 수'},
-                          title='연령대별 이용자 수')
-            st.plotly_chart(fig2)
-
-        except Exception as e:
-            st.error(f"'따릉이 포함' 또는 '따릉이 미포함' 컬럼을 숫자로 변환하는 중 오류 발생: {e}")
+        age_group_df['이용자 수'] = age_group_df['따릉이 포함'] + age_group_df['따릉이 미포함']
+        
+        # 새로 만든 '이용자 수' 컬럼을 사용해서 바 차트 생성
+        fig2 = px.bar(age_group_df, x='연령대', y='이용자 수', 
+                      labels={'연령대': '연령대', '이용자 수': '이용자 수'},
+                      title='연령대별 이용자 수')
+        st.plotly_chart(fig2)
     else:
         st.warning("연령대별 이용자 데이터(age_group_users.csv)에 '따릉이 포함'과 '따릉이 미포함' 컬럼이 필요합니다.")
         st.write("현재 파일의 컬럼:", age_group_df.columns.tolist())
