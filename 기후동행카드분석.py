@@ -4,7 +4,7 @@ import plotly.express as px
 
 # --- URL 수정 ---
 activated_cards_url = 'https://raw.githubusercontent.com/iissyyii/final/main/activated_cards.xlsx'
-age_group_users_url = 'https://raw.githubusercontent.com/iissyyii/final/main/age_group_users.xlsx'
+age_group_users_url = 'https://raw.githubusercontent.com/iissyyii/final/main/age_group_users1.xlsx'
 
 @st.cache_data
 def load_data():
