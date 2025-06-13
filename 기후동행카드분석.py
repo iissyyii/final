@@ -9,11 +9,11 @@ age_group_users_url = 'https://raw.githubusercontent.com/iissyyii/final/main/age
 @st.cache_data
 def load_data():
     """
-    엑셀 파일을 GitHub Raw URL에서 직접 불러옵니다.
+    엑셀 파일과 CSV 파일을 GitHub Raw URL에서 직접 불러옵니다.
     """
     try:
         activated_df = pd.read_excel(activated_cards_url)
-        age_group_df = pd.read_excel(age_group_users_url)
+        age_group_df = pd.read_csv(age_group_users_url)  # CSV 파일을 읽도록 수정
         return activated_df, age_group_df
     except Exception as e:
         # 만약 URL에서 파일을 불러오다 오류가 발생하면, 사용자에게 에러 메시지를 보여줍니다.
@@ -60,5 +60,5 @@ if activated_df is not None and age_group_df is not None:
                       title='연령대별 이용자 수')
         st.plotly_chart(fig2)
     else:
-        st.warning("연령대별 이용자 데이터(age_group_users.xlsx)에 '따릉이 포함'과 '따릉이 미포함' 컬럼이 필요합니다.")
+        st.warning("연령대별 이용자 데이터(age_group_users.csv)에 '따릉이 포함'과 '따릉이 미포함' 컬럼이 필요합니다.")
         st.write("현재 파일의 컬럼:", age_group_df.columns.tolist())
